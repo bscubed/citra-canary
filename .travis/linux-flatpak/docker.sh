@@ -9,6 +9,7 @@ MAKEFLAGS="-j4"
 # Update the host packages
 apt-get -y update && apt-get -y full-upgrade
 apt-get install -y flatpak flatpak-builder ca-certificates git sshfs
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install -y flathub org.kde.Platform//5.11
 flatpak install -y flathub org.kde.Sdk//5.11
 flatpak install -y flathub org.freedesktop.Sdk.Extension.gcc7
