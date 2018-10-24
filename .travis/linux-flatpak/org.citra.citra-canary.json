@@ -68,6 +68,7 @@
             "sources": [
                 {
                     "type": "git",
+                    "branch": "flatpak",
                     "url": "../.."
                 },
                 {
