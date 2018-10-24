@@ -7,11 +7,11 @@ GPG_DIR="$CITRA_SRC_DIR/.travis/linux-flatpak/gpg/"
 MAKEFLAGS="-j4"
 
 # Update the host packages
-apt-get update && apt-get full-upgrade
+apt-get -y update && apt-get full-upgrade
 apt-get install -y flatpak flatpak-builder ca-certificates git sshfs
-flatpak install flathub org.kde.Platform//5.11
-flatpak install flathub org.kde.Sdk//5.11
-flatpak install flathub org.freedesktop.Sdk.Extension.gcc7
+flatpak install -y flathub org.kde.Platform//5.11
+flatpak install -y flathub org.kde.Sdk//5.11
+flatpak install -y flathub org.freedesktop.Sdk.Extension.gcc7
 
 # Download the Citra compatibility list
 curl --url https://api.citra-emu.org/gamedb/ -o "$CITRA_SRC_DIR"/.travis/linux-flatpak/compatibility_list.json
