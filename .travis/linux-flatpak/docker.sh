@@ -7,7 +7,7 @@ GPG_DIR="$CITRA_SRC_DIR/.travis/linux-flatpak/gpg/"
 MAKEFLAGS="-j4"
 
 # Update the host packages
-apt-get -y update && apt-get full-upgrade
+apt-get -y update && apt-get -y full-upgrade
 apt-get install -y flatpak flatpak-builder ca-certificates git sshfs
 flatpak install -y flathub org.kde.Platform//5.11
 flatpak install -y flathub org.kde.Sdk//5.11
