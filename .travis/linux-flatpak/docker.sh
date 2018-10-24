@@ -14,11 +14,6 @@ flatpak install -y flathub org.kde.Platform//5.11
 flatpak install -y flathub org.kde.Sdk//5.11
 flatpak install -y flathub org.freedesktop.Sdk.Extension.gcc7
 
-# Enable fuse support
-sudo modprobe fuse
-chmod 666 /dev/fuse
-chown root:$USER /etc/fuse.conf
-
 # Download the Citra compatibility list
 curl --url https://api.citra-emu.org/gamedb/ -o "$CITRA_SRC_DIR"/.travis/linux-flatpak/compatibility_list.json
 
