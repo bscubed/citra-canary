@@ -7,8 +7,6 @@ matrix:
     dist: trusty
     services: docker
     cache: ccache
-    git:
-      quiet: true
     before_deploy:
     - openssl aes-256-cbc -K $encrypted_b892d17adcdd_key -iv $encrypted_b892d17adcdd_iv -in .travis/linux-flatpak/citra-sftp-flatpak.enc -out /tmp/citra-sftp-flatpak -d
     - eval "$(ssh-agent -s)"

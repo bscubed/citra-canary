@@ -29,7 +29,7 @@
     "modules": [
         {
             "name": "cmake",
-            "buildsystem": "cmake-ninja",
+            "buildsystem": "cmake",
             "cleanup": ["*"],
             "sources": [
                 {
@@ -41,7 +41,7 @@
         },
         {
             "name": "citra",
-            "buildsystem": "cmake-ninja",
+            "buildsystem": "cmake",
             "builddir": true,
             "config-opts": [
                 "-DCMAKE_BUILD_TYPE=Release",
