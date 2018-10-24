@@ -21,9 +21,9 @@ curl --url https://api.citra-emu.org/gamedb/ -o "$CITRA_SRC_DIR"/.travis/linux-f
 flatpak-builder --force-clean --repo="$REPO_DIR" "$BUILD_DIR" "$CITRA_SRC_DIR"/.travis/linux-flatpak/org.citra.citra-canary.json
 echo "$(ls $REPO_DIR)"
 
-mkdir mnt
-sshfs $SSH_USER@$SSH_HOSTNAME:$SSH_LOCATION mnt -C -p $SSH_PORT -o IdentityFile=/tmp/citra-sftp-flatpak
-echo "If you see this file, that means everything works." > mnt/success.txt
+mkdir $CITRA_SRC_DIR/mnt
+sshfs $SSH_USER@$SSH_HOSTNAME:$SSH_LOCATION $CITRA_SRC_DIR/mnt -C -p $SSH_PORT -o IdentityFile=/tmp/citra-sftp-flatpak
+echo "If you see this file, that means everything works." > $CITRA_SRC_DIR/mnt/success.txt
 
 # Sign the generated repository
 # flatpak build-sign "$REPO_DIR" --gpg-sign="$GPG_KEY" --gpg-homedir="$GPG_DIR"
