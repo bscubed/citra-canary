@@ -24,6 +24,7 @@ curl --url https://api.citra-emu.org/gamedb/ -o "$CITRA_SRC_DIR/.travis/linux-fl
 
 # Push a test file to the repo
 eval "$(ssh-agent -s)"
+openssl aes-256-cbc -K $encrypted_b892d17adcdd_key -iv $encrypted_b892d17adcdd_iv -in "$PRIVATE_KEY.enc" -out "$PRIVATE_KEY" -d
 chmod 600 $PRIVATE_KEY
 ssh-add $PRIVATE_KEY
 chmod -R 600 "$HOME/.ssh"
