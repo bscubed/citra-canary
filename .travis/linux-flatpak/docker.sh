@@ -3,7 +3,8 @@
 CITRA_SRC_DIR="/citra"
 BUILD_DIR="$CITRA_SRC_DIR/build"
 REPO_DIR="$CITRA_SRC_DIR/repo"
-GPG_DIR="$CITRA_SRC_DIR/.travis/linux-flatpak/gpg/"
+GPG_DIR="$CITRA_SRC_DIR/.travis/linux-flatpak/gpg"
+STATE_DIR="$CITRA_SRC_DIR/.flatpak-builder"
 MAKEFLAGS="-j4"
 
 # Update the host packages
@@ -18,7 +19,7 @@ flatpak install -y flathub org.freedesktop.Sdk.Extension.gcc7
 curl --url https://api.citra-emu.org/gamedb/ -o "$CITRA_SRC_DIR"/.travis/linux-flatpak/compatibility_list.json
 
 # Build the citra flatpak
-flatpak-builder --ccache --force-clean --repo="$REPO_DIR" "$BUILD_DIR" "$CITRA_SRC_DIR"/.travis/linux-flatpak/org.citra.citra-canary.json
+flatpak-builder --ccache --force-clean --state-dir="$STATE_DIR" --repo="$REPO_DIR" "$BUILD_DIR" "$CITRA_SRC_DIR"/.travis/linux-flatpak/org.citra.citra-canary.json
 
 # Push a test file to the repo
 echo "[$SSH_HOSTNAME]:$SSH_PORT,[$(dig +short $SSH_HOSTNAME)]:$SSH_PORT $SSH_PUBLIC_KEY" > ~/.ssh/known_hosts
