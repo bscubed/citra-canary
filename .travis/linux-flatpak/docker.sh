@@ -16,16 +16,21 @@ apt-get install -y flatpak flatpak-builder ca-certificates git sshfs curl fuse d
 # flatpak install -y flathub org.freedesktop.Sdk.Extension.gcc7
 
 # Download the Citra compatibility list
-curl --url https://api.citra-emu.org/gamedb/ -o "$CITRA_SRC_DIR"/.travis/linux-flatpak/compatibility_list.json
+curl --url https://api.citra-emu.org/gamedb/ -o "$CITRA_SRC_DIR/.travis/linux-flatpak/compatibility_list.json"
 
 # Build the citra flatpak
 # flatpak-builder --ccache --force-clean --state-dir="$STATE_DIR" --repo="$REPO_DIR" "$BUILD_DIR" "$CITRA_SRC_DIR"/.travis/linux-flatpak/org.citra.citra-canary.json
 
 # Push a test file to the repo
+eval "$(ssh-agent -s)"
+chmod 600 /tmp/citra-sftp-flatpak
+ssh-add /tmp/citra-sftp-flatpak
+chmod -R 600 "$HOME/.ssh"
+chown -R "$USER" "$HOME/.ssh"
 echo "[$SSH_HOSTNAME]:$SSH_PORT,[$(dig +short $SSH_HOSTNAME)]:$SSH_PORT $SSH_PUBLIC_KEY" > ~/.ssh/known_hosts
-mkdir $CITRA_SRC_DIR/mnt
-sshfs $SSH_USER@$SSH_HOSTNAME:$SSH_LOCATION $CITRA_SRC_DIR/mnt -C -p $SSH_PORT -o IdentityFile=/tmp/citra-sftp-flatpak -odebug,sshfs_debug,loglevel=debug
-echo "If you see this file, that means everything works." > $CITRA_SRC_DIR/mnt/success.txt
+mkdir "$CITRA_SRC_DIR/mnt"
+sshfs "$SSH_USER@$SSH_HOSTNAME:$SSH_LOCATION" "$CITRA_SRC_DIR/mnt" -C -p "$SSH_PORT" -o IdentityFile=/tmp/citra-sftp-flatpak -odebug,sshfs_debug,loglevel=debug
+echo "If you see this file, that means everything works." > "$CITRA_SRC_DIR/mnt/success.txt"
 
 # Sign the generated repository
 # flatpak build-sign "$REPO_DIR" --gpg-sign="$GPG_KEY" --gpg-homedir="$GPG_DIR"

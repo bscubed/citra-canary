@@ -9,8 +9,5 @@ matrix:
     cache: ccache
     before_deploy:
     - openssl aes-256-cbc -K $encrypted_b892d17adcdd_key -iv $encrypted_b892d17adcdd_iv -in .travis/linux-flatpak/citra-sftp-flatpak.enc -out /tmp/citra-sftp-flatpak -d
-    - eval "$(ssh-agent -s)"
-    - chmod 600 /tmp/citra-sftp-flatpak
-    - ssh-add /tmp/citra-sftp-flatpak
     install: "./.travis/linux-flatpak/deps.sh"
     script: "./.travis/linux-flatpak/build.sh"
