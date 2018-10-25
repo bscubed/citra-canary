@@ -31,7 +31,7 @@ chmod -R 600 "$HOME/.ssh"
 chown -R root "$HOME/.ssh"
 echo "[$SSH_HOSTNAME]:$SSH_PORT,[$(dig +short $SSH_HOSTNAME)]:$SSH_PORT $SSH_PUBLIC_KEY" > ~/.ssh/known_hosts
 mkdir "$CITRA_SRC_DIR/mnt"
-sshfs "$SSH_USER@$SSH_HOSTNAME:$SSH_LOCATION" "$CITRA_SRC_DIR/mnt" -C -p "$SSH_PORT" -o IdentityFile=$PRIVATE_KEY -odebug,sshfs_debug,loglevel=debug
+sshfs "$SSH_USER@$SSH_HOSTNAME:$SSH_LOCATION" "$CITRA_SRC_DIR/mnt" -C -p "$SSH_PORT" -o IdentityFile=$PRIVATE_KEY
 echo "If you see this file, that means everything works." > "$CITRA_SRC_DIR/mnt/success.txt"
 
 # Sign the generated repository
