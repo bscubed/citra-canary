@@ -5,6 +5,7 @@ BUILD_DIR="$CITRA_SRC_DIR/build"
 REPO_DIR="$CITRA_SRC_DIR/repo"
 GPG_DIR="$CITRA_SRC_DIR/.travis/linux-flatpak/gpg"
 STATE_DIR="$CITRA_SRC_DIR/.flatpak-builder"
+PRIVATE_KEY="$CITRA_SRC_DIR/.travis/linux-flatpak/citra-sftp-flatpak"
 MAKEFLAGS="-j4"
 
 # Update the host packages
@@ -23,13 +24,13 @@ curl --url https://api.citra-emu.org/gamedb/ -o "$CITRA_SRC_DIR/.travis/linux-fl
 
 # Push a test file to the repo
 eval "$(ssh-agent -s)"
-chmod 600 /tmp/citra-sftp-flatpak
-ssh-add /tmp/citra-sftp-flatpak
+chmod 600 $PRIVATE_KEY
+ssh-add $PRIVATE_KEY
 chmod -R 600 "$HOME/.ssh"
 chown -R "$USER" "$HOME/.ssh"
 echo "[$SSH_HOSTNAME]:$SSH_PORT,[$(dig +short $SSH_HOSTNAME)]:$SSH_PORT $SSH_PUBLIC_KEY" > ~/.ssh/known_hosts
 mkdir "$CITRA_SRC_DIR/mnt"
-sshfs "$SSH_USER@$SSH_HOSTNAME:$SSH_LOCATION" "$CITRA_SRC_DIR/mnt" -C -p "$SSH_PORT" -o IdentityFile=/tmp/citra-sftp-flatpak -odebug,sshfs_debug,loglevel=debug
+sshfs "$SSH_USER@$SSH_HOSTNAME:$SSH_LOCATION" "$CITRA_SRC_DIR/mnt" -C -p "$SSH_PORT" -o IdentityFile=$PRIVATE_KEY -odebug,sshfs_debug,loglevel=debug
 echo "If you see this file, that means everything works." > "$CITRA_SRC_DIR/mnt/success.txt"
 
 # Sign the generated repository
