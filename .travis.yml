@@ -9,3 +9,4 @@ matrix:
     cache: ccache
     install: "./.travis/linux-flatpak/deps.sh"
     script: "./.travis/linux-flatpak/build.sh"
+    after_success: "./.travis/linux-flatpak/upload.sh"
