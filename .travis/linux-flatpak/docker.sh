@@ -13,7 +13,7 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 flatpak install -y flathub org.kde.Platform//5.11 org.kde.Sdk//5.11 org.freedesktop.Sdk.Extension.gcc7
 
 # Configure SSH keys
-echo "$SSH_PRIVATE_KEY" > "$SSH_KEY"
+openssl aes-256-cbc -K $encrypted_858d61589cb3_key -iv $encrypted_858d61589cb3_iv -in "$CITRA_SRC_DIR/.travis/linux-flatpak/ssh.key.enc" -out "$SSH_KEY" -d
 eval "$(ssh-agent -s)"
 chmod -R 600 "$HOME/.ssh"
 chown -R root "$HOME/.ssh"
@@ -22,7 +22,7 @@ ssh-add "$SSH_KEY"
 echo "[$SSH_HOSTNAME]:$SSH_PORT,[$(dig +short $SSH_HOSTNAME)]:$SSH_PORT $SSH_PUBLIC_KEY" > ~/.ssh/known_hosts
 
 # Configure GPG keys
-echo "$GPG_PRIVATE_KEY" > "$GPG_KEY"
+openssl aes-256-cbc -K $encrypted_858d61589cb3_key -iv $encrypted_858d61589cb3_iv -in "$CITRA_SRC_DIR/.travis/linux-flatpak/gpg.key.enc" -out "$GPG_KEY" -d
 gpg2 --import "$GPG_KEY"
 
 # Download the Citra compatibility list
@@ -33,5 +33,5 @@ mkdir -p $REPO_DIR
 sshfs "$SSH_USER@$SSH_HOSTNAME:$SSH_LOCATION" "$REPO_DIR" -C -p "$SSH_PORT" -o IdentityFile="$SSH_KEY"
 
 # Build the citra flatpak
-flatpak-builder --jobs=4 --ccache --force-clean --state-dir="$STATE_DIR" --gpg-sign="$GPG_PUBLIC_KEY" --repo="$REPO_DIR" "$BUILD_DIR" "$CITRA_SRC_DIR"/.travis/linux-flatpak/org.citra.citra-canary.json
-flatpak build-update-repo "$REPO_DIR" --generate-static-deltas --gpg-sign="$GPG_PUBLIC_KEY"
+flatpak-builder -v --jobs=4 --ccache --force-clean --state-dir="$STATE_DIR" --gpg-sign="$GPG_PUBLIC_KEY" --repo="$REPO_DIR" "$BUILD_DIR" "$CITRA_SRC_DIR"/.travis/linux-flatpak/org.citra.citra-canary.json
+flatpak build-update-repo "$REPO_DIR" -v --generate-static-deltas --gpg-sign="$GPG_PUBLIC_KEY"
