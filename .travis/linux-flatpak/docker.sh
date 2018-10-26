@@ -13,7 +13,7 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 flatpak install -y flathub org.kde.Platform//5.11 org.kde.Sdk//5.11 org.freedesktop.Sdk.Extension.gcc7
 
 # Configure SSH keys
-echo $SSH_PRIVATE_KEY > "$SSH_KEY"
+echo "$SSH_PRIVATE_KEY" > "$SSH_KEY"
 eval "$(ssh-agent -s)"
 chmod -R 600 "$HOME/.ssh"
 chown -R root "$HOME/.ssh"
@@ -22,7 +22,7 @@ ssh-add "$SSH_KEY"
 echo "[$SSH_HOSTNAME]:$SSH_PORT,[$(dig +short $SSH_HOSTNAME)]:$SSH_PORT $SSH_PUBLIC_KEY" > ~/.ssh/known_hosts
 
 # Configure GPG keys
-echo $GPG_PRIVATE_KEY > "$GPG_KEY"
+echo "$GPG_PRIVATE_KEY" > "$GPG_KEY"
 gpg2 --import "$GPG_KEY"
 
 # Download the Citra compatibility list
