@@ -36,5 +36,4 @@ Thumbs.db
 
 # Flatpak generated files
 .flatpak-builder/
-output/
 repo/

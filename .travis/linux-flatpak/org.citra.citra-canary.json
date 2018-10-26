@@ -67,6 +67,23 @@
             ],
             "sources": [
                 {
+                    "type": "shell",
+                    "commands": [
+                        "echo 'Checking variables in flatpak'",
+                        "echo 'CI: $CI'",
+                        "echo 'TRAVIS: $TRAVIS'",
+                        "echo 'CONTINUOUS_INTEGRATION: $CONTINUOUS_INTEGRATION'",
+                        "echo 'TRAVIS_BRANCH: $TRAVIS_BRANCH'",
+                        "echo 'TRAVIS_BUILD_ID: $TRAVIS_BUILD_ID'",
+                        "echo 'TRAVIS_BUILD_NUMBER: $TRAVIS_BUILD_NUMBER'",
+                        "echo 'TRAVIS_COMMIT: $TRAVIS_COMMIT'",
+                        "echo 'TRAVIS_JOB_ID: $TRAVIS_JOB_ID'",
+                        "echo 'TRAVIS_JOB_NUMBER: $TRAVIS_JOB_NUMBER'",
+                        "echo 'TRAVIS_REPO_SLUG: $TRAVIS_REPO_SLUG'",
+                        "echo 'TRAVIS_TAG: $TRAVIS_TAG'"
+                    ]
+                },
+                {
                     "type": "git",
                     "branch": "flatpak",
                     "url": "../.."
@@ -81,7 +98,7 @@
                 },
                 {
                     "type": "file",
-                    "path": "compatibility_list.json",
+                    "path": "/tmp/compatibility_list.json",
                     "dest-filename": "dist/compatibility_list/compatibility_list.json"
                 }
             ]
